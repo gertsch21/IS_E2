@@ -1,0 +1,236 @@
+body {
+    
+
+}
+
+
+.login {
+	background: url('facultalk_login_bg.jpg') center center no-repeat scroll;
+	 -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: 100%auto;
+    height: 800px;
+    width: 700px;
+    align: center;
+    vertical-align: middle;
+    display: table-cell;
+
+
+}
+
+/* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
+.business-header {
+    min-height: 250px;
+    background: url('wall_bg.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-color: #D0EFE0;
+    vertical-align: middle;
+}
+
+.create-header {
+    height: 400 px;
+    background: url('wall_bg.jpg') center center no-repeat scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-color: #D0EFE0;
+    vertical-align: middle;
+}
+
+/* Customize the text color and shadow color and to optimize text legibility. */
+
+.tagline {
+    text-shadow: 0 0 10px #000;
+    color: #fff;
+}
+
+.img-center {
+    margin: 0 auto;
+}
+
+
+footer {
+    margin: 50px 0;
+}
+
+/* ----- User ----- */
+.user {
+	background-color: #F0F0F0;
+	border-radius: 6px;
+	margin: 20px;
+	padding: 15px;
+	text-align: center;
+	min-height: 150px;
+ 	line-height: 100px;
+ 	text-align: center;
+}
+
+.usertext {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal; 
+}
+
+a.realname {
+	font-size: 20px;
+	font-weight: bold;
+	color: #22B573;
+	margin-bottom: 0px;
+}
+
+p.username {
+	font-size: 15px;
+	margin-bottom: 0px;
+}
+
+/* ----- Gruppenansicht ----- */ 
+.group {
+	background-color: #F5F5F5;
+	border-radius: 6px;
+    border-style: solid;
+    border-width: 1px;
+	border-color: #CCC;
+	padding: 15px;
+	min-height: 130px;
+}
+
+input.btnGroup {
+	background-color: #22B573;
+	color: #FFFFFF;
+	display: inline-block;
+	  padding: 6px 12px;
+	  margin-bottom: 1px;
+	  font-size: 14px;
+	  font-weight: bold;
+	  line-height: 1.42857143;
+	  text-align: center;
+	  white-space: nowrap;
+	  vertical-align: middle;
+	  border: 1px solid transparent;
+	  border-radius: 4px;
+	  min-width: 250px;
+}
+
+input.btnGreen {
+	background-color: #22B573;
+	color: #FFFFFF;
+	display: inline-block;
+	  padding: 6px 12px;
+	  margin-bottom: 1px;
+	  font-size: 14px;
+	  font-weight: normal;
+	  line-height: 1.42857143;
+	  text-align: center;
+	  white-space: nowrap;
+	  vertical-align: middle;
+	  border: 1px solid transparent;
+	  border-radius: 4px;
+	  min-width: 200px;
+}
+
+input.btnAdd2Cart {
+	background-color: #FFFFFF;
+	color: #22B573;
+	display: inline-block;
+	  padding: 4px 8px;
+	  margin-bottom: 1px;
+	  font-size: 12px;
+	  font-weight: normal;
+	  line-height: 1.42857143;
+	  text-align: center;
+	  white-space: nowrap;
+	  vertical-align: middle;
+	  border: 1px solid transparent;
+	  border-radius: 4px;
+	  min-width: 150px;
+}
+
+button.btnMember {
+	border-color: #22B573;
+	border-width: 3px;
+	color: #22B573;
+	background-color: #F5F5F5;
+	
+	  padding: 4px 12px;
+	  margin-bottom: 1px;
+	  margin-top: 2px;
+	  font-size: 14px;
+	  font-weight: normal;
+	  line-height: 1.2;
+	  text-align: center;
+	  white-space: nowrap;
+	  vertical-align: middle;
+	  border-radius: 4px;
+	  border: 1px solid;
+	  min-width: 150px;
+}
+
+input.createPost {
+	background-color: #DDF2E9;
+	color: #22B573;
+	display: inline-block;
+	  padding: 6px 12px;
+	  margin-bottom: 1px;
+	  font-size: 14px;
+	  font-weight: bold;
+	  line-height: 1.42857143;
+	  text-align: center;
+	  white-space: nowrap;
+	  vertical-align: middle;
+	  border: 1px solid transparent;
+	  border-radius: 4px;
+	  width: 500px;
+}
+
+a.btn {
+	input.btnGroup {
+	background-color: #22B573;
+	color: #FFFFFF;
+	display: inline-block;
+	  padding: 6px 12px;
+	  margin-bottom: 1px;
+	  font-size: 14px;
+	  font-weight: bold;
+	  line-height: 1.42857143;
+	  text-align: center;
+	  white-space: nowrap;
+	  vertical-align: middle;
+	  border: 1px solid transparent;
+	  border-radius: 4px;
+	  min-width: 250px;
+}
+}
+
+/* Warenkorb */
+.panel-cart {
+  border-color: #d6e9c6;
+  width: 330px;
+}
+.panel-cart > .panel-heading {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+.panel-cart > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #d6e9c6;
+}
+.panel-cart > .panel-heading .badge {
+  color: #dff0d8;
+  background-color: #3c763d;
+}
+.panel-cart > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #d6e9c6;
+}
+div.product {
+  background-color: #eeeeee;
+  border-radius: 4px;
+  width: 300 px;
+  height: 500 px;
+  align: center;
+  padding: 10px;
+   
+}  
