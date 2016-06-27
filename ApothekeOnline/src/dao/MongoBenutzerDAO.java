@@ -248,6 +248,38 @@ public class MongoBenutzerDAO implements BenutzerDAO {
 		}
 	}
 	
+	@Override
+	public List<Benutzer> getMitarbeiterList() {
+		List<Benutzer> liste = new ArrayList<Benutzer>();
+
+		FindIterable<Document> documents = db.getCollection(collectionName).find();
+		
+		try{
+			for(Document d : documents){
+				if(d.get("mitarbeiterDaten") != null){
+					liste.add( new Mitarbeiter(
+							d.getString("uname"),
+							d.getInteger("_id").intValue(),
+							d.getString("pwd"),
+							d.getString("firstname"),
+							d.getString("surname"),
+							d.getString("email"),
+							((Document)d.get("adresse")).getString("country"),
+							((Document)d.get("adresse")).getInteger("zip").intValue(),
+							((Document)d.get("adresse")).getString("city"),
+							((Document)d.get("adresse")).getString("street"),
+							((Document)d.get("adresse")).getInteger("number").intValue(),
+							((Document)d.get("mitarbeiterDaten")).getInteger("staffNo"),
+							((Document)d.get("mitarbeiterDaten")).getInteger("sallary")));
+				}
+			}
+			return liste;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@Override
 	public Benutzer getBenutzerByUName(String uName) {

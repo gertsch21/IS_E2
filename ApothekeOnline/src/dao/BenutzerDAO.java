@@ -35,6 +35,12 @@ public interface BenutzerDAO {
 	public List<Benutzer> getKundenList();
 	
 	/**
+	 * Diese Methode soll alle Mitarbeiter, welche im System registriert sind zurückgeben(als Liste)
+	 * @return Eine Liste der Mitarbeiter(List<Benutzer>)
+	 */
+	public List<Benutzer> getMitarbeiterList();
+	
+	/**
 	 * Diese Methode soll alle Benutzer, welche im System registriert sind zurückgeben(als Liste)
 	 * @return Eine Liste der Benutzer(List<Benutzer>)
 	 */

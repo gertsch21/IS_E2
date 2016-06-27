@@ -34,6 +34,7 @@ public class DBBenutzerDAO implements BenutzerDAO {
 	private PreparedStatement loadUserStmtID;
 	private PreparedStatement loadAllUserStmt;
 	private PreparedStatement loadAllKundeStmt;
+	private PreparedStatement loadAllMitarbeiterStmt;
 	
 	private PreparedStatement deleteKundeStmt;
 	private PreparedStatement deleteMitarStmt;
@@ -65,6 +66,7 @@ public class DBBenutzerDAO implements BenutzerDAO {
 			
 			loadAllUserStmt = con.prepareStatement("SELECT * FROM ISE_USR");
 			loadAllKundeStmt = con.prepareStatement("SELECT * FROM ISE_CUSTOMER");
+			loadAllMitarbeiterStmt = con.prepareStatement("SELECT * FROM ISE_EMPLOYEE");
 			
 			deleteUserStmt = con.prepareStatement("DELETE FROM ISE_USR WHERE USRID=?");
 			deleteKundeStmt = con.prepareStatement("DELETE FROM ISE_CUSTOMER WHERE USRID=?");
@@ -260,6 +262,38 @@ public class DBBenutzerDAO implements BenutzerDAO {
 		}
 	}
 	
+	@Override
+	public List<Benutzer> getMitarbeiterList() {
+		List<String> alleUsrIDMitarbeiter = new ArrayList<String>();
+		List<Benutzer> benutzerAlsMitarbeiterListe = new ArrayList<Benutzer>();
+		List<String> alleUsrNamesMitarbeiter = new ArrayList<String>();
+		
+		try {
+			ResultSet result = loadAllMitarbeiterStmt.executeQuery();
+			
+			while(result.next()){
+				String usrID = result.getString("USRID");
+				alleUsrIDMitarbeiter.add(usrID);
+			}
+			
+			
+			Benutzer b;
+			for(String usrID : alleUsrIDMitarbeiter){
+				alleUsrNamesMitarbeiter.add(getBenutzerByUsrID(usrID).getuName() );
+				
+			}
+			
+			for(String uName : alleUsrNamesMitarbeiter){
+				benutzerAlsMitarbeiterListe.add(getMitarbeiterByUsername(uName));
+			}
+			
+			return benutzerAlsMitarbeiterListe;
+			
+		} catch (Exception e) {
+			System.out.println("DBBenutzerDAO: getKundenList: Error");
+			return null;
+		}
+	}
 	
 	@Override
 	public Benutzer getBenutzerByUName(String uName) {
