@@ -26,7 +26,8 @@ public class Benutzerverwaltung {
 	 * 
 	 */
 	private Benutzerverwaltung() {
-		dao = new DBBenutzerDAO();
+		//dao = new DBBenutzerDAO();
+		dao = new MongoBenutzerDAO();
 	}
 	
 	/**
