@@ -66,7 +66,7 @@ Anzahl an Kunden: <%=( (List<Benutzer>)(session.getAttribute("alleKunden")) ).si
 			</form>
 
 <!-- Einfaches Retour zur Hauptseite -->
-			<form method="get" action="HauptseiteMitarbeiter.jsp">
+			<form method="get" action="HauptseiteKunde.jsp">
 			    <button type="submit">Back</button>
 			</form>
 

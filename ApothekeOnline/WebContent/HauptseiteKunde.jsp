@@ -1,3 +1,4 @@
+<%@page import="management.Benutzerverwaltung"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -105,7 +106,38 @@
 				 </div> <!-- Ende Sidebar für Warenkorb -->
 			</div>
 		</div> <!-- Ende Container Hauptbereich -->
+
 		
+	<%Benutzerverwaltung a = Benutzerverwaltung.getInstance();
+	if(a.getEmployeeByUname((String)session.getAttribute("username"))!=null){
+	%>
+	
+    	</div>
+    		<form action="Produktverwaltungscontroller" method="POST">
+				<input class="btn btn-primary" name="produktVerw" type="submit" value="Kategorie hinzufügen"/>
+				<input type="hidden" name="produktVerw" value="true"/>
+			</form>
+    		<form action="KategorieHinzufuegenController" method="POST">
+				<input class="btn btn-primary" name="kategorieReg" type="submit" value="Kategorie hinzufügen"/>
+				<input type="hidden" name="kategorieReg" value="true"/>
+			</form>
+			<form action="ProduktHinzufuegenController" method="POST">
+				<input class="btn btn-primary" name="produktReg" type="submit" value="Produkt hinzufügen"/>
+				<input type="hidden" name="produktReg" value="true"/>
+			</form>
+			<form action="MitarbeiterRegistrierController" method="POST">
+				<input class="btn btn-primary" name="mitarbeiterReg" type="submit" value="Mitarbeiter registrieren"/>
+				<input type="hidden" name="mitarbeiterReg" value="true"/>
+			</form>
+			<form action="Benutzerverwaltungscontroller" method="POST">
+				<input class="btn btn-primary" name="mitarbeiterReg" type="submit" value="Kunden verwalten"/>
+				<input type="hidden" name="mitarbeiterReg" value="true"/>
+			</form>
+		</div>
+    
+    <% } %>    
+    
+    		
 <!-------- Footer -------->		
 		<div class="row"> 
 			<div class="col-md-12">
@@ -113,7 +145,6 @@
 			</div>
 		</div> <!-- Ende Footer -->
 	</div>
-		
-        
+	
 </body>
 </html>

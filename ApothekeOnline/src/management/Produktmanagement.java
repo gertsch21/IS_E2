@@ -22,18 +22,18 @@ public class Produktmanagement {
 	}
     
     
-    public boolean produktAnlegen(int prodID, String prodName, double price, String prodDescription, int categoryID) {
+    public boolean produktAnlegen(String prodName, double price, String prodDescription, int categoryID) {
         Random randomGenerator = new Random();
 		int id = randomGenerator.nextInt(Integer.MAX_VALUE);
-		System.out.println("Produktmanagement:produktAnlegen: "+prodID+", "+prodName+", "+price+", "+prodDescription+", "+categoryID+", anlegen!");
-		return dao.speichereProdukt(new Produkt(prodID, prodName, price, prodDescription, categoryID));
+		System.out.println("Produktmanagement:produktAnlegen: "+id+", "+prodName+", "+price+", "+prodDescription+", "+categoryID+", anlegen!");
+		return dao.speichereProdukt(new Produkt(id, prodName, price, prodDescription, categoryID));
     }
   
-    public boolean categoryAnlegen(int categoryID, String categoryName, String categoryDescription) {
+    public boolean categoryAnlegen(String categoryName, String categoryDescription) {
         Random randomGenerator = new Random();
 		int id = randomGenerator.nextInt(Integer.MAX_VALUE);
-		System.out.println("Produktmanagement:categoryAnlegen: "+categoryID+", "+categoryName+", "+categoryDescription+", anlegen!");
-		return dao.speichereCategory(new Category(categoryID, categoryName, categoryDescription));
+		System.out.println("Produktmanagement:categoryAnlegen: "+id+", "+categoryName+", "+categoryDescription+", anlegen!");
+		return dao.speichereCategory(new Category(id, categoryName, categoryDescription));
     }
     
     

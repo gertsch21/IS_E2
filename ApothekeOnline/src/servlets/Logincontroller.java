@@ -76,7 +76,7 @@ public class Logincontroller extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("username", username);
 				session.setAttribute("fehler", null);
-				request.getRequestDispatcher("HauptseiteMitarbeiter.jsp").include(request, response);
+				response.sendRedirect(request.getContextPath() + "/ShopController");
 				response.setContentType("text/html");
 				return;
 			}

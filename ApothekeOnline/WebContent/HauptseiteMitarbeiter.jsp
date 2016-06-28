@@ -38,47 +38,6 @@
 
 <body>
 
-	<!-- Fixed navbar -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="https://www.univie.ac.at/en/">University
-				of Vienna</a>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="http://royalcoconut.bplaced.net/">bPlaced</a></li>
-				<li><a href="http://homepage.univie.ac.at/a1363761">Homepage1</a></li>
-				<li class="active"><a
-					href="http://wwwlab.cs.univie.ac.at/~a1363761/">Homepage2</a></li>
-				<li><a
-					href="http://tomcat01lab.cs.univie.ac.at:31637/IBuy/login">SWE</a></li>
-				<li><a href="http://wwwlab.cs.univie.ac.at/~a1363761/dbs">DBS2015</a></li>
-			</ul>
-		</div>
-		<!--/.nav-collapse -->
-	</div>
-	</nav>
-
-
-
-
-
-
-	<div class="container theme-showcase" role="main">
-
-		<!-- Main jumbotron for a primary marketing message or call to action -->
-		<div class="jumbotron">
-
-			<h1>
-				Willkommen <%=session.getAttribute("username")%></h1> <!-- wenn null, dann darf man sowieso nicht auf die Hauptseite zugreifen --> 
 
 <%
 	if(session.getAttribute("message")!=null){ %>
@@ -91,26 +50,68 @@
 	} 
 %>
 
+<!-------- HEADER -------->
+	<div class="container wrap sidebar-right">
+		<div class="row"> 
+			<div class="col-md-12"> 
+				<div class="jumbotron">
 
-			<div>
-				<form class="navbar-form navbar-left"
-					action="SucheProduktController" method="post">
-					<div class="form-group">
-						<b>Produkt:</b> <input class="form-control" name="suchwert"
-							type="text" size="80" />
+					<h1>Apotheke Online</h1>
+					<h3>Herzlich Willkommen <%=session.getAttribute("username")%>!</h3> <!-- wenn null, dann darf man sowieso nicht auf die Hauptseite zugreifen -->
+
+					<!-- Suchfeld -->
+					<div class="col-md-10">
+						<form class="navbar-form navbar-left"
+							action="SucheProduktController" method="post">
+								<input class="form-control" name="suchwert" type="text" size="80" />
+								<input class="btnGreen" type="submit" value="Produkt suchen" />
+						</form>
 					</div>
-					<input class="btn btn-primary" type="submit" value="suchen" />
-				</form>
-				
-				
-				<br /> <br />
-				
-				<form action="Logincontroller" method="GET">
-					<input class="btn btn-primary" name="logout" type="submit"
-						value="Logout" />
-				</form>	
-				
-
+					
+					<!-- Logout-Button -->
+					<div class="col-md-2">
+						<form action="Logincontroller" method="GET">
+							<input class="btnGreen" name="logout" type="submit"
+								value="Logout" />
+						</form>
+					</div>
+				</div> <!-- End jumbotron -->
+			</div> 
+		</div><!-- End HEADER -->
+		
+<!-- Container für Hauptbereich: große Spalte für Produkte + kleine für Warenkorb -->		
+		<div class="container"> 
+			<div class="row">
+				 <div class="col-md-8"> <!-- Hauptspalte -->
+				 	<jsp:include page="Produktuebersicht.jsp" />
+				 	
+				 </div> <!-- Ende Hauptspalte -->
+				 
+				 <!-------- Sidebar für Warenkorb -------->				 
+				 <div class="col-md-4"> 
+				 	<div class="sidebar-nav-fixed affix">
+							 
+		                   <div class="panel panel-cart">
+						      <div class="panel-heading">Warenkorb</div>
+						      <div class="panel-body">
+						      	
+						      	<jsp:include page="Warenkorb.jsp" />
+						      	
+							      <form action="KassaController" method="GET">
+										<input class="btnGreen" type="submit" 
+											value="zur Kasse" />
+										
+								  </form>
+						      </div>
+						    </div>
+	  
+           			</div>
+				 </div> <!-- Ende Sidebar für Warenkorb -->
+			</div>
+		</div> <!-- Ende Container Hauptbereich -->
+		
+		
+		
 			</div>
 				<form action="MitarbeiterRegistrierController" method="POST">
 					<input class="btn btn-primary" name="mitarbeiterReg" type="submit" value="Mitarbeiter registrieren"/>
@@ -121,7 +122,16 @@
 					<input type="hidden" name="regBest" value="true"/>
 				</form>
 			</div>
+		
+		
+<!-------- Footer -------->		
+		<div class="row"> 
+			<div class="col-md-12">
+				(c) Apotheke Online
+			</div>
+		</div> <!-- Ende Footer -->
+	</div>
+		
 
-		</div>
 </body>
 </html>

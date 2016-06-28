@@ -141,7 +141,7 @@ public class MitarbeiterRegistrierController extends HttpServlet {
 				session.setAttribute("message", "JUHU, '"+username+"' wurde nun als Mitarbeiter gespeichert");
 				System.out.println("MitarbeiterRegistrierungsController: Kunde angelegt: "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
 				session.setAttribute("fehler", null);
-				request.getRequestDispatcher("HauptseiteMitarbeiter.jsp").include(request, response);
+				request.getRequestDispatcher("HauptseiteKunde.jsp").include(request, response);
 				response.setContentType("text/html");
 				return;
 			}

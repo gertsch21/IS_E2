@@ -1,3 +1,5 @@
+<%@page import="model.Category"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -53,7 +55,7 @@
 
 
 <!-- Eingaben zum Registrieren -->
-			<form action="MitarbeiterRegistrierController" method="POST">
+			<form action="ProduktHinzufuegenController" method="POST">
 				<table class="table">
 					<tr>
 						<th>Parameter</th>
@@ -61,63 +63,29 @@
 					</tr>
 
 					<tr>
-						<td>Vorname:</td>
-						<td><input type="text" name="vorname" value="vorname" /></td>
+						<td>Name:</td>
+						<td><input type="text" name="name" value="" /></td>
 					</tr>
 					<tr>
-						<td>Nachname:</td>
-						<td><input type="text" name="nachname" value="nachname" /></td>
-					</tr>
-
-					<tr>
-						<td>Email:</td>
-						<td><input type="text" name="email" value="email" /></td>
+						<td>Description:</td>
+						<td><input type="text" name="description" value="" /></td>
 					</tr>
 					<tr>
-						<td>Salary:</td>
-						<td><input type="text" name="salary" /></td>
-					</tr>
-				</table>
-				<table class="table">
-					<tr>
-						<td>Land:</td>
-						<td><input type="text" name="land" value="land" /></td>
+						<td>Price:</td>
+						<td><input type="text" name="price" value="" />(Zahl mit . als Komma)</td>
 					</tr>
 					<tr>
-						<td>PLZ:</td>
-						<td><input type="number" name="plz" value="1234" /></td>
+						<td>Kategorie:</td>
+						<td>
+							<select name = "kategorie">
+							<% for(Category c : ((List<Category>)session.getAttribute("KategorieListe"))){ %>
+								<option value=<%=c.getcategoryID() %>> <%=c.getcategoryName() %></option>
+							<%} %>
+							</select>
+						</td>
 					</tr>
-					<tr>
-						<td>Wohnort:</td>
-						<td><input type="text" name="wohnort" value="ort" /></td>
-					</tr>
-					<tr>
-						<td>Strasse:</td>
-						<td><input type="text" name="strasse" value="strasse" /></td>
-					</tr>
-					<tr>
-						<td>HausNr:</td>
-						<td><input type="number" name="nummer" value="1" /></td>
-					</tr>
-				</table>
-
-				<table class="table">
-					<tr>
-						<td>staffNo:</td>
-						<td><input type="number" name="staffNo" value="" /></td>
-					</tr>
-					<tr>
-						<td>Username:</td>
-						<td><input type="text" name="username" value="unamee" /></td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><input type="password" name="password" /></td>
-					</tr>
-					<tr>
-						<td>Password wiederholen:</td>
-						<td><input type="password" name="passwordW" /></td>
-					</tr>
+					
+				
 					<tr>
 						<td><input type="submit" value="Send" /></td>
 						<td></td>
