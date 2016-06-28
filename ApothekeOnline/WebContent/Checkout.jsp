@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-
 <%
-	if (session.getAttribute("username") == null
-			|| session.getAttribute("username").equals("null")) {
-		System.out
-				.println("HauptseiteMitarbeiter: nicht eingeloggt -> Login");
+	if(session.getAttribute("username")==null || session.getAttribute("username").equals("null")  ){
+		System.out.println("HauptseiteMitarbeiter: nicht eingeloggt -> Login");
 		response.sendRedirect("Login.jsp");
 	}
 %>
@@ -79,7 +76,7 @@
 		<div class="container"> 
 			<div class="row">
 				 <div class="col-md-8"> <!-- Hauptspalte -->
-				 	<jsp:include page="Produktuebersicht.jsp" />
+				 	<jsp:include page="CheckCart.jsp" />
 				 	
 				 </div> <!-- Ende Hauptspalte -->
 				 
@@ -88,16 +85,14 @@
 				 	<div class="sidebar-nav-fixed affix">
 							 
 		                   <div class="panel panel-cart">
-						      <div class="panel-heading">Warenkorb</div>
+						      <div class="panel-heading">Prüfen Sie Ihre Bestellung:</div>
 						      <div class="panel-body">
 						      	
-						      	<jsp:include page="Warenkorb.jsp" />
+						      
 						      	
-							      <form action="KassaController" method="GET">
-										<input class="btnGreen" type="submit" 
-											value="zur Kasse" />
-										
-								  </form>
+						      	
+							      <p> Wenn Sie ein Produkt aus dem Warekorb entfernen möchten,
+							      setzen Sie die Menge 0!</p>
 						      </div>
 						    </div>
 	  

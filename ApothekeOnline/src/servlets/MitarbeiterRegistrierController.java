@@ -148,6 +148,7 @@ public class MitarbeiterRegistrierController extends HttpServlet {
 			//eingabe nicht erfolgreich:
 			else{
 				System.out.println("MitarbeiterRegistrierungsController: Person konnte nicht angelegt werden: "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
+				request.getSession(true).setAttribute("fehler", "Fehler: Username schon vergeben!");
 				response.sendRedirect("RegistrierenMitarbeiter.jsp");
 			}
 		}

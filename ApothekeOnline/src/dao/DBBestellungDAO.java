@@ -8,16 +8,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Benutzer;
 import model.Bestellung;
 import model.Position;
-import model.Warenkorb;
 
 /**
- * @author Katrin
+ * @author Katrin, Peter
  *
  */
 public class DBBestellungDAO implements BestellungDAO {
@@ -46,7 +47,7 @@ public class DBBestellungDAO implements BestellungDAO {
 			savePositionStmt = con
 					.prepareStatement("INSERT INTO ISE_ITEM(orderID,itemID,quantity,totalPrice,productID) VALUES(?,?,?,?,?)");
 			saveBestellungStmt = con
-					.prepareStatement("INSERT INTO ISE_ShoppingCart(orderID,orderDate,totalPrice,usrID) VALUES (?, ?, ?, ?)");
+					.prepareStatement("INSERT INTO ISE_ShoppingCart(orderID,orderDate,totalPrice,usrID) VALUES (?, TO_DATE(?, 'mm/dd/yyyy'), ?, ?)");
 			
 			loadPositionStmt = con.prepareStatement("SELECT * FROM ISE_Item WHERE orderID=? AND itemID=?");
 			loadBestellungStmt = con.prepareStatement("SELECT * FROM ISE_ShoppingCart WHERE orderID=?");
@@ -104,7 +105,7 @@ public class DBBestellungDAO implements BestellungDAO {
 				saveBestellungStmt.setDouble(3, b.getGesamtpreis());
 				saveBestellungStmt.setInt(4, b.getBenuterID());		
 				
-				savePositionStmt.executeUpdate();
+				saveBestellungStmt.executeUpdate();
 				return true;
 			}catch(NullPointerException e){
 				System.out.println("DBBestellungDAO: speichereBestellung: Übergebene Bestellung (Parameter) ist null!!! ("+e.getMessage()+")");
@@ -211,8 +212,8 @@ public class DBBestellungDAO implements BestellungDAO {
 	@Override
 	public Bestellung getBestellungByID(String oID) {
 		try {
-			loadPositionStmt.setString(1, oID);
-			ResultSet result = loadPositionStmt.executeQuery();
+			loadBestellungStmt.setString(1, oID);
+			ResultSet result = loadBestellungStmt.executeQuery();
 			
 			if (!result.next()){
 				System.out.println("DBBestellungDAO: getBestellungByID: Keine Bestellung gefunden!");
@@ -220,7 +221,12 @@ public class DBBestellungDAO implements BestellungDAO {
 			}
 			
 			String orID = result.getString("orderID");
-			String date = result.getString("orderDate");
+			///String date = result.getString("orderDate");
+			
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+			Timestamp timestamp = result.getTimestamp("orderDate");
+			String date = format.format(timestamp);
+			
 			double gesamtpreis = result.getDouble("totalPrice");
 			int pID = result.getInt("usrID");
 

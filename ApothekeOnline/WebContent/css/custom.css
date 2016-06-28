@@ -234,3 +234,10 @@ div.product {
   padding: 10px;
    
 }  
+table.checkCart {
+	border-spacing: 6px;
+}
+table.checkCart th, td {
+	padding: 6px;
+	
+}

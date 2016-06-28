@@ -79,6 +79,11 @@ public class MongoBenutzerDAO implements BenutzerDAO {
 		int number = k.getHausNr();
 		
 		
+		if(this.getBenutzerByUName(username)!=null){ // Username schon vergeben
+			System.out.println("MongoBenutzerDAO: Username schon vergeben");
+			return false;
+		}
+		
 		try {
 
 			Document kundenDaten = new Document()
@@ -130,6 +135,10 @@ public class MongoBenutzerDAO implements BenutzerDAO {
 		String street = m.getStrasse();
 		int number = m.getHausNr();
 		
+		if(this.getBenutzerByUName(username) != null){//username schon vergeben
+			System.out.println("MongoBenutzerDAO: Username schon vergeben");
+			return false;
+		}
 		
 		try {
 
@@ -337,7 +346,7 @@ public class MongoBenutzerDAO implements BenutzerDAO {
 
 	/**
 	 * Mit dieser Methode kann man auch einen Benutzer anhand seiner eindeutigen UserID bekommen(Rein zum Testen!!!)
-	 * @param usrID die Userid des zu suchenden Users 
+	 * @param usrID die Userid des zu suchenden Users(Achtung: Als String)
 	 * @return null, falls kein Benutzer gefunden wurde, ansonsten das Benutzerobjekt
 	 */
 	private Benutzer getBenutzerByUsrID(String usrID) {
@@ -426,8 +435,7 @@ public class MongoBenutzerDAO implements BenutzerDAO {
 	
 	
 	/**
-	 * Ist benötigt, um Einträge aus der Tabelle Benutzer zu löschen
-	 * Wird benötigt um Kunden und Mitarbeiter zu löschen
+	 * Egal ob es sich um einen Kunden oder Mitarbeiter handelt, das Dokument aus der Collection User wird gelöscht
 	 *
 	 * @param uName Der eindeutige uName des zu löschenden Benutzers
 	 * @return True falls löschen erfolgreich, sonst false
@@ -455,7 +463,7 @@ public class MongoBenutzerDAO implements BenutzerDAO {
 
 	
 	/**
-	 * Mit dieser Methode kann man anhand vom Usernamen eines Benutzers die ID bekommen.(Testzwecke!)
+	 * Mit dieser Methode kann man anhand vom Usernamen eines Benutzers die ID bekommen.(reine Testzwecke!)
 	 * @param uName Der Username des zu suchenden Benutzers
 	 * @return Die UserID(als String!)
 	 */

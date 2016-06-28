@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-
 <%
-	if (session.getAttribute("username") == null
-			|| session.getAttribute("username").equals("null")) {
-		System.out
-				.println("HauptseiteMitarbeiter: nicht eingeloggt -> Login");
+	if(session.getAttribute("username")==null || session.getAttribute("username").equals("null")  ){
+		System.out.println("HauptseiteMitarbeiter: nicht eingeloggt -> Login");
 		response.sendRedirect("Login.jsp");
 	}
 %>
@@ -79,7 +76,17 @@
 		<div class="container"> 
 			<div class="row">
 				 <div class="col-md-8"> <!-- Hauptspalte -->
-				 	<jsp:include page="Produktuebersicht.jsp" />
+				 	<div class="product">
+				 		<h2>Vielen Dank für Ihre Bestellung!</h2>
+				 		<h3>Ihr Auftrag wurde erfolgreich gespeichert.</h3>
+				 		<br><br>
+				 		
+				 		<form action="ShopController" method="GET">
+										<input class="btnGreen" type="submit" 
+											value="zurück zur Startseite" />
+										
+						</form>
+				 	</div>
 				 	
 				 </div> <!-- Ende Hauptspalte -->
 				 
@@ -88,16 +95,11 @@
 				 	<div class="sidebar-nav-fixed affix">
 							 
 		                   <div class="panel panel-cart">
-						      <div class="panel-heading">Warenkorb</div>
+						      <div class="panel-heading">Kundenservice</div>
 						      <div class="panel-body">
-						      	
-						      	<jsp:include page="Warenkorb.jsp" />
-						      	
-							      <form action="KassaController" method="GET">
-										<input class="btnGreen" type="submit" 
-											value="zur Kasse" />
-										
-								  </form>
+						      	<p> Bei Fragen zu Ihrer Bestellung
+						      	erreichen Sie uns zum Ortstarif
+						        unter 01/ 238 852 </p>
 						      </div>
 						    </div>
 	  

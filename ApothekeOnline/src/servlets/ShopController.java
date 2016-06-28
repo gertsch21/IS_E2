@@ -43,7 +43,7 @@ public class ShopController extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(true);
 		
 		StringBuffer prodOut = new StringBuffer();
 		
@@ -77,7 +77,8 @@ public class ShopController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
+
 		
 		// ---------------- logic of shopping cart ------------------
 		String productID = request.getParameter("product_id"); 
@@ -85,27 +86,23 @@ public class ShopController extends HttpServlet {
 		Map<String, Integer> cart = new HashMap<String, Integer>();
 
 		// if session variable "cart" is already set, store content in local cart
-		
 		if ( session.getAttribute("cart") != null ){
-			System.out.println("ich bin nicht null");
 			cart = (Map<String, Integer>) session.getAttribute("cart");
-		} 
+		}
 
 		// if product is already in cart increment quantity by 1
-		System.out.println("ProductIDs: "+cart.keySet());
-		System.out.println("Values"+cart.values());
 		if ( cart.containsKey(productID) ) {
-			System.out.println("im contain");
-			int quantity = cart.get(productID).intValue() + 1;
+			int quantity = cart.get(productID) + 1;
 			cart.put(productID, quantity);
-		
+			for (String key : cart.keySet()) {
+			    System.out.println("already set: " + key + " " + cart.get(key));
+			}
 		} else {
-			System.out.println("nicht im contain");
 			cart.put(productID, 1);
 		}
 		
 		session.setAttribute("cart", cart);
-		session.setAttribute("haha", "haha");
+
 		
 		// ---------------- generate output for shopping cart ------------------
 		Produktmanagement prodman = Produktmanagement.getInstance();
@@ -115,9 +112,9 @@ public class ShopController extends HttpServlet {
 			int quantity = cart.get(productID) + 1;
 			cartOut.append(quantity);
 		}
-	        	cartOut.append(""
-	        			+ "		<table class=\"cart\">"
-    	        		+ "			<tr>");
+	        	cartOut.append(
+	        			"<table class=\"cart\">"
+    	        		);
 	        	
 	        	 // Iterate over all Key-Value-Pairs
 	        	 Iterator it = cart.entrySet().iterator();
@@ -126,21 +123,20 @@ public class ShopController extends HttpServlet {
 	        	    	Map.Entry pair = (Map.Entry)it.next();
 	        	    	String keyValue = (String) pair.getKey();
 	        	        cartOut.append(""
+	        	        		+ "<tr>"
 	        	        		+ "<td>" + prodman.getProduktByProduktID(keyValue).getprodName() + "</td>"
 	        	        		+ "<td>&nbsp; x &nbsp;</td>"
-	        	        		+ "<td>" + pair.getValue().toString() + "</td>");
+	        	        		+ "<td>" + pair.getValue().toString() + "</td>"
+	        	        		+ "</tr>");
 	        	    
-	        	        it.remove(); // avoids a ConcurrentModificationException
+	        	        
 	        	 }
         	 
-        	    cartOut.append("	</tr>"
-    	        		+ "		</table>");
+        	    cartOut.append(
+    	        		 "</table>");
 		
 		session.setAttribute("cartOut", cartOut);
 		
-		
-		System.out.println("ausgabe vorm ende "+((Map<String, Integer>)session.getAttribute("cart")).keySet());
-		System.out.println("ausgabe2: "+session.getAttribute("haha"));
 		
 		
 		request.getRequestDispatcher("HauptseiteKunde.jsp").include(request, response);

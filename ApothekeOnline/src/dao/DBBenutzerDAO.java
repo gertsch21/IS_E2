@@ -16,7 +16,7 @@ import model.*;
 /**
  * @author Gerhard
  *
- * Diese Klasse ist dafür zuständig, die Daten aus der Datenbank zu holen und diese Managementklassen zu übergeben
+ * Diese Klasse ist dafür zuständig, die Daten aus der Datenbank(Oracle) zu holen und diese Managementklassen zu übergeben
  */
 public class DBBenutzerDAO implements BenutzerDAO {
 //Daten für DB Verbindung
@@ -24,7 +24,7 @@ public class DBBenutzerDAO implements BenutzerDAO {
 	private final String user = "a1363772";
 	private final String pwd = "PRise16";
 	
-//Statements um Daten aus db zu holen(über SQL)
+//Statements um Daten aus db zu holen(über java.sql.*)
 	private PreparedStatement saveKundeStmt;
 	private PreparedStatement saveMitarStmt;
 	private PreparedStatement saveUserStmt;

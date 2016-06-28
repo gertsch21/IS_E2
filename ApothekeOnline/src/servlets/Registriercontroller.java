@@ -129,6 +129,7 @@ public class Registriercontroller extends HttpServlet {
 			//eingabe nicht erfolgreich:
 			else{
 				System.out.println("RegistrierungsController: Person konnte nicht angelegt werden: "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
+				request.getSession(true).setAttribute("fehler", "Fehler: Username leider schon vergeben!");
 				response.sendRedirect("Registrieren.jsp");
 			}
 		}
