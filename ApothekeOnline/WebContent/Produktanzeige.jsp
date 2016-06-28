@@ -1,4 +1,4 @@
-<%@page import="model.Benutzer"%>
+<%@page import="model.Produkt"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -22,7 +22,7 @@
 <meta name="description" content=""/>
 <meta name="author" content="Gerhard"/>
 
-<title>KundenAnzeige</title>
+<title>ProduktAnzeige</title>
 
 <!-- To ensure proper rendering and touch zooming for mobile -->
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -41,7 +41,7 @@
 <body>
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
-			<h1>Kunden:</h1>
+			<h1>Produkte:</h1>
 
 <!-- Möglichen Fehlertext ausgeben -->
 			<%
@@ -55,19 +55,19 @@
 
 
 <!-- Eingaben zum Registrieren -->
-			<form action="Benutzerverwaltungscontroller" method="POST">
+			<form action="Produktverwaltungscontroller" method="POST">
 				<table class="table">
-					<tr><th>username</th><th>password</th><th>löschen</th></tr>
-<%for(Benutzer b : (List<Benutzer>)(session.getAttribute("alleKunden")) ){ %>
-					<tr><td><%=b.getuName()%></td><td><%=b.getPassword()%></td><td><input type="submit" name="zuLoeschen" value="<%=b.getuName()%>"/></td></tr>
+					<tr><th>Name</th><th>Preis</th><th>löschen</th></tr>
+<%for(Produkt p : (List<Produkt>)(session.getAttribute("alleProdukte")) ){ %>
+					<tr><td><%=p.getprodName()%></td><td><%=p.getprice()%></td><td><input type="submit" name="zuLoeschen" value="<%=p.getprodID()%>"/></td></tr>
 <%} %>
 </table>	
-Anzahl an Kunden: <%=( (List<Benutzer>)(session.getAttribute("alleKunden")) ).size()%>			
+Anzahl an Produkte: <%=( (List<Produkt>)(session.getAttribute("alleProdukte")) ).size()%>			
 			</form>
 
 <!-- Einfaches Retour zur Hauptseite -->
-			<form method="get" action="HauptseiteKunde.jsp">
-			    <button type="submit">Back</button>
+			<form method="post" action="Produktverwaltungscontroller">
+			    <button name="beendeProduktverw" type="submit">Back</button>
 			</form>
 
 		</div>

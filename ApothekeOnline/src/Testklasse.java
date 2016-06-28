@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,9 @@ public class Testklasse {
 		double zahl = Double.parseDouble(keyName) +1;
 		
 		System.out.println(zahl);
+		
+		System.out.println(Integer.parseInt("04"));
+		
 		
 	}
 }

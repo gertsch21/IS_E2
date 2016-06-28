@@ -39,7 +39,7 @@
 <body>
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
-			<h1>Registrieren sie nun einen neuen Mitarbeiter:</h1>
+			<h1>Mitarbeiter registrieren:</h1>
 
 <!-- Möglichen Fehlertext ausgeben -->
 			<%

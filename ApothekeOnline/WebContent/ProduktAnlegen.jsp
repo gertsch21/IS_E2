@@ -22,7 +22,7 @@
 <meta name="description" content=""/>
 <meta name="author" content="Gerhard"/>
 
-<title>MitarbeiterRegistration</title>
+<title>ProduktAnlegen</title>
 
 <!-- To ensure proper rendering and touch zooming for mobile -->
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -41,7 +41,7 @@
 <body>
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
-			<h1>Registrieren sie nun einen neuen Mitarbeiter:</h1>
+			<h1>Produkt anlegen:</h1>
 
 <!-- Möglichen Fehlertext ausgeben -->
 			<%

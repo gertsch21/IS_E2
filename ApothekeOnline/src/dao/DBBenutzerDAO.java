@@ -244,7 +244,6 @@ public class DBBenutzerDAO implements BenutzerDAO {
 			}
 			
 			
-			Benutzer b;
 			for(String usrID : alleUsrIDKunden){
 				alleUsrNamesKunden.add(getBenutzerByUsrID(usrID).getuName() );
 				
@@ -277,7 +276,6 @@ public class DBBenutzerDAO implements BenutzerDAO {
 			}
 			
 			
-			Benutzer b;
 			for(String usrID : alleUsrIDMitarbeiter){
 				alleUsrNamesMitarbeiter.add(getBenutzerByUsrID(usrID).getuName() );
 				

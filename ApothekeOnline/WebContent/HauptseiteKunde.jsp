@@ -114,8 +114,8 @@
 	
     	</div>
     		<form action="Produktverwaltungscontroller" method="POST">
-				<input class="btn btn-primary" name="produktVerw" type="submit" value="Kategorie hinzufügen"/>
-				<input type="hidden" name="produktVerw" value="true"/>
+				<input class="btn btn-primary" name="prover" type="submit" value="Produkte verwalten"/>
+				<input type="hidden" name="prover" value="true"/>
 			</form>
     		<form action="KategorieHinzufuegenController" method="POST">
 				<input class="btn btn-primary" name="kategorieReg" type="submit" value="Kategorie hinzufügen"/>
@@ -130,8 +130,8 @@
 				<input type="hidden" name="mitarbeiterReg" value="true"/>
 			</form>
 			<form action="Benutzerverwaltungscontroller" method="POST">
-				<input class="btn btn-primary" name="mitarbeiterReg" type="submit" value="Kunden verwalten"/>
-				<input type="hidden" name="mitarbeiterReg" value="true"/>
+				<input class="btn btn-primary" name="benver" type="submit" value="Kunden verwalten"/>
+				<input type="hidden" name="benver" value="true"/>
 			</form>
 		</div>
     

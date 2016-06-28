@@ -3,6 +3,7 @@
  */
 package management;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -51,8 +52,28 @@ public class Benutzerverwaltung {
 	
 	public boolean kundeAnlegen(String vorname, String nachname, String email, String land, int plz, String wohnort, String strasse, int hausNr, String username, String password, String birthday, String sex){//Verbesserungswürdig!!!
 		Random randomGenerator = new Random();
+		
+		String datum = birthday;
+		try{
+			String[] datumarray = birthday.split("-");
+			if(datumarray.length ==1 )datumarray = birthday.split("\\.");
+			int jahr = Integer.parseInt(datumarray[0]);
+			int monat = Integer.parseInt(datumarray[1]);
+			int tag = Integer.parseInt(datumarray[2]);
+			
+			Date heute = new Date();
+			
+			if(jahr>2016 || monat>12 || tag>31) throw new Exception();
+			
+			datum = tag+"-"+monat+"-"+jahr;
+			
+		}catch(Exception e){
+			System.out.println("Benutzerverwaltung: KundeAnlegen: Fehler beim datum");
+			return false;
+		}
+		
 		int id = randomGenerator.nextInt(Integer.MAX_VALUE);//nur positive, aber bis maximum
-		System.out.println("Benutzerverwaltung:kundeAnlegen: "+id+", "+vorname+" "+nachname+", "+email+", "+land+" "+plz+" "+" "+wohnort+" "+strasse+", "+username+" "+password+",  "+birthday+", "+sex+", anlegen!");
+		System.out.println("Benutzerverwaltung:kundeAnlegen: "+id+", "+vorname+" "+nachname+", "+email+", "+land+" "+plz+" "+" "+wohnort+" "+strasse+", "+username+" "+password+",  "+datum+", "+sex+", anlegen!");
 		return dao.speichereKunde(new Kunde(username,id,password,vorname,nachname,email,land,plz,wohnort,strasse,hausNr,birthday,sex));
 	}
 	

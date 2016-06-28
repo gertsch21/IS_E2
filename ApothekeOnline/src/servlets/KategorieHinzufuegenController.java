@@ -59,7 +59,7 @@ public class KategorieHinzufuegenController extends HttpServlet {
 	//Ab hier wird alles bearbeitet, das vom MitarbeiterRegistrieren.jsp kommt
 		if(request.getParameter("name")==null){//registrierbutton gedrückt
 			System.out.println("KategorieHinzufuegencontroller: kein Name beim Anlegen der Kategorie!");
-			request.getSession().setAttribute("fehler","kein Name beim Anlegen der Kategorie!");
+			request.getSession().setAttribute("fehler","Kein Name beim Anlegen der Kategorie!");
 			request.getRequestDispatcher("KategorieAnlegen.jsp").include(request, response);
 			response.setContentType("text/html");
 			return;
@@ -68,6 +68,14 @@ public class KategorieHinzufuegenController extends HttpServlet {
 			String name=request.getParameter("name");
 			String description=request.getParameter("description");
 			
+			
+			if(name.isEmpty()){//registrierbutton gedrückt
+				System.out.println("KategorieHinzufuegencontroller: kein Name beim Anlegen der Kategorie!");
+				request.getSession().setAttribute("fehler","Kein Name beim Anlegen der Kategorie!");
+				request.getRequestDispatcher("KategorieAnlegen.jsp").include(request, response);
+				response.setContentType("text/html");
+				return;
+			}
 			
 			//Nachdem Benutzer angelegt wurde, wird er automatisch(nicht über Login) zur Hauptseite.jsp weitergeleitet.
 			if(prover.categoryAnlegen(name, description)){

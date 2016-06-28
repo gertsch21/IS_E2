@@ -122,14 +122,14 @@ public class Registriercontroller extends HttpServlet {
 				session.setAttribute("message", "Wilkommen "+username+" bei uns!");
 				System.out.println("RegistrierungsController: Kunde angelegt: "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
 				session.setAttribute("fehler", null);
-				request.getRequestDispatcher("HauptseiteKunde.jsp").include(request, response);
+				response.sendRedirect(request.getContextPath() + "/ShopController");//Damit Produktliste in session gleich aktualisiert wird
 				response.setContentType("text/html");
 				return;
 			}
 			//eingabe nicht erfolgreich:
 			else{
 				System.out.println("RegistrierungsController: Person konnte nicht angelegt werden: "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
-				request.getSession(true).setAttribute("fehler", "Fehler: Username leider schon vergeben!");
+				request.getSession(true).setAttribute("fehler", "Fehler: Der Username ist leider schon vergeben!");
 				response.sendRedirect("Registrieren.jsp");
 			}
 		}

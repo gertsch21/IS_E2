@@ -66,6 +66,20 @@ public class ProduktHinzufuegenController extends HttpServlet {
 			String kategorie=request.getParameter("kategorie");
 
 			
+			if(name.isEmpty()){
+				System.out.println("ProduktHinzufuegencontroller: Es wurde kein Name für das Produkt eingegeben!");
+				request.getSession().setAttribute("fehler", "Es wurde kein Name für das Produkt eingegeben!");
+				request.getRequestDispatcher("ProduktAnlegen.jsp").include(request, response);
+				response.setContentType("text/html");
+				return;
+			}
+			if(priceAsString.isEmpty()){
+				System.out.println("ProduktHinzufuegencontroller: Es wurde kein Preis für das Produkt eingegeben!");
+				request.getSession().setAttribute("fehler", "Es wurde kein Preis für das Produkt eingegeben!");
+				request.getRequestDispatcher("ProduktAnlegen.jsp").include(request, response);
+				response.setContentType("text/html");
+				return;
+			}
 			
 			int kategorieID = 0;
 			double price= 0;
@@ -88,7 +102,7 @@ public class ProduktHinzufuegenController extends HttpServlet {
 				session.setAttribute("message", "Produkt '"+name+"' wurde soeben angelegt!");
 				System.out.println("ProdukthinzufuegeController: Produkt angelegt: "+name+", KategorieID: "+kategorie);
 				session.setAttribute("fehler", null);
-				request.getRequestDispatcher("HauptseiteKunde.jsp").include(request, response);
+				response.sendRedirect(request.getContextPath() + "/ShopController");//Damit Produktliste in session gleich aktualisiert wird
 				response.setContentType("text/html");
 				return;
 			}
