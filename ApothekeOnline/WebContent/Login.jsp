@@ -30,10 +30,10 @@
 <body>
 	<div class="container theme-showcase">
 		<div class="jumbotron">
-			<img src="Bilder/apothekeSymbol.jpg" alt="" height="50.7" width="42"/>
-			<h1>Apotheke Online</h1>
+			<img src="Bilder/aon_logo.png" alt="" height="123" width="600"/>
 			<h2>Login</h2>
 			<p>
+
 				Kunde: (user:nessi | passwort:hallo)<br /> Mitarbeiter:
 				(user:gertsch21 | passwort:hallo)
 			</p>

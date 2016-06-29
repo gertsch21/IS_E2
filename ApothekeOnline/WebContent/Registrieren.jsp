@@ -47,11 +47,11 @@
 
 					<tr>
 						<td>Vorname:</td>
-						<td><input type="text" name="vorname" value="vorname" /></td>
+						<td><input type="text" name="vorname" value="" /></td>
 					</tr>
 					<tr>
 						<td>Nachname:</td>
-						<td><input type="text" name="nachname" value="nachname" /></td>
+						<td><input type="text" name="nachname" value="" /></td>
 					</tr>
 					<tr>
 						<td>GebDatum:</td>
@@ -59,29 +59,29 @@
 					</tr>
 					<tr>
 						<td>Email:</td>
-						<td><input type="text" name="email" value="email" /></td>
+						<td><input type="text" name="email" value="" /></td>
 					</tr>
 				</table>
 				<table class="table">
 					<tr>
 						<td>Land:</td>
-						<td><input type="text" name="land" value="land" /></td>
+						<td><input type="text" name="land" value="" /></td>
 					</tr>
 					<tr>
 						<td>PLZ:</td>
-						<td><input type="text" name="plz" value="1234" /></td>
+						<td><input type="text" name="plz" value="" /></td>
 					</tr>
 					<tr>
 						<td>Wohnort:</td>
-						<td><input type="text" name="wohnort" value="ort" /></td>
+						<td><input type="text" name="wohnort" value="" /></td>
 					</tr>
 					<tr>
 						<td>Strasse:</td>
-						<td><input type="text" name="strasse" value="strasse" /></td>
+						<td><input type="text" name="strasse" value="" /></td>
 					</tr>
 					<tr>
 						<td>HausNr:</td>
-						<td><input type="text" name="nummer" value="1" /></td>
+						<td><input type="text" name="nummer" value="" /></td>
 					</tr>
 				</table>
 
@@ -94,7 +94,7 @@
 				<table class="table">
 					<tr>
 						<td>Username:</td>
-						<td><input type="text" name="username" value="unamee" /></td>
+						<td><input type="text" name="username" value="" /></td>
 					</tr>
 					<tr>
 						<td>Password:</td>

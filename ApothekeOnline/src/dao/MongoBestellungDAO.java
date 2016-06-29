@@ -6,11 +6,12 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import model.Bestellung;
@@ -50,14 +51,14 @@ public class MongoBestellungDAO implements BestellungDAO {
 		if(getPositionByID(p.getPositionsNr(), p.getorderID()) == null) { //Position noch nicht vorhanden
 			try {
 				System.out.println("MongoBestellungDAO: speicherePosition: " + p.getorderID() + ", " + p.getPositionsNr());
-				DBCollection collection = (DBCollection) db.getCollection(collectionPosition);
-				BasicDBObject document = new BasicDBObject();
-				document.put("orderId", p.getorderID());
-				document.put("itemID", p.getPositionsNr());
-				document.put("quantity", p.getMenge());
-				document.put("totalPrice", p.getGesamtpreis());
-				document.put("productID", p.getProduktID());
-				collection.insert(document);
+				MongoCollection<Document> collection = db.getCollection(collectionPosition);
+				Document document = new Document()
+						.append("orderID", p.getorderID())
+						.append("itemID", p.getPositionsNr())
+						.append("quantity", p.getMenge())
+						.append("totalPrice", p.getGesamtpreis())
+						.append("productID", p.getProduktID());
+				collection.insertOne(document);
 				return true;
 			}catch(NullPointerException e){
 				System.out.println("MongoBestellungDAO: speicherePosition: �bergebene Position (Parameter) ist null!!! ("+e.getMessage()+")");
@@ -76,13 +77,13 @@ public class MongoBestellungDAO implements BestellungDAO {
 		if(getBestellungByID(b.getOrderID()) == null) { //Bestellung nicht vorhanden
 			try {
 				System.out.println("MongoBestellungDAO: speichereBestellung: " + b.getOrderID());
-				DBCollection collection = (DBCollection) db.getCollection(collectionBestellung);
-				BasicDBObject document = new BasicDBObject();
-				document.put("orderId", b.getOrderID());
-				document.put("orderDate", b.getOrderDate());
-				document.put("totalPrice", b.getGesamtpreis());
-				document.put("usrID", b.getBenuterID());
-				collection.insert(document);
+				MongoCollection<Document> collection = db.getCollection(collectionBestellung);
+				Document document = new Document()
+						.append("orderID", b.getOrderID())
+						.append("orderDate", b.getOrderDate())
+						.append("totalPrice", b.getGesamtpreis())
+						.append("usrID", b.getBenuterID());
+				collection.insertOne(document);
 				return true;
 			}catch(NullPointerException e){
 				System.out.println("MongoBestellungDAO: speichereBestellung: �bergebene Bestellung (Parameter) ist null!!! ("+e.getMessage()+")");
@@ -98,37 +99,64 @@ public class MongoBestellungDAO implements BestellungDAO {
 
 	@Override
 	public List<Position> getPositionListbyBestellung(String oID) {
-		// TODO Auto-generated method stub
-		return null;
+		MongoCollection<Document> collection = db.getCollection(collectionBestellung);
+		Document query = new Document("orderID", oID);
+		FindIterable<Document> iterable = collection.find(query);
+		List<Position> liste = new ArrayList<Position>();
+		
+		iterable.forEach(new Block<Document>() {
+		    @Override
+		    public void apply(final Document doc) {
+				String orID = (String) doc.get("orderID");
+				int posNr = (int) doc.get("itemID");
+				int menge = (int) doc.get("quantity");
+				double gesamtpreis = (double) doc.get("totalPrice");
+				int prID = (int) doc.get("productID");
+				liste.add(new Position(orID, posNr, menge, gesamtpreis, prID));
+			}
+		});
+		
+		System.out.println("MongoBestellungDAO: getPositionListbyBestellung: Anzahl Positionen: " + liste.size());
+		return liste;
 	}
 
 	@Override
 	public List<Bestellung> getBestellungList() {
 		List<Bestellung> all = new ArrayList<>();
-		DBCollection collection = (DBCollection) db.getCollection(collectionBestellung);
-		List<DBObject> list = collection.find().toArray();
-		for (DBObject o : list) {
-			Bestellung b = new Bestellung((String)o.get("orderId"),(String) o.get("orderDate"),(double) o.get("totalPrice"), (int)o.get("usrID"));
-			all.add(b);
-		}
+		MongoCollection<Document> collection = db.getCollection(collectionBestellung);
+		FindIterable<Document> iterable = collection.find();
+		iterable.forEach(new Block<Document>() {
+		    @Override
+		    public void apply(final Document doc) {
+		    	Bestellung b = new Bestellung((String)doc.get("orderId"),(String) doc.get("orderDate"),(double) doc.get("totalPrice"), (int)doc.get("usrID"));
+				all.add(b);
+			}
+		});
 		return all;
 	}
 
 	@Override
 	public Position getPositionByID(int pID, String oID) {
-		DBCollection collection = (DBCollection) db.getCollection(collectionBestellung);
-		BasicDBObject query = new BasicDBObject("_id", oID);
-		DBObject object = collection.findOne(query);
-		Position position = new Position((String)object.get("_id"),(int) object.get("itemID"),(int) object.get("quantity"), (int)object.get("totalPrice"), (int)object.get("productID"));
+		MongoCollection<Document> collection =  db.getCollection(collectionBestellung);
+		Document query = new Document("orderID", oID).append("itemID", pID);
+		Document doc = collection.find(query).first();
+		if (doc == null) {
+			return null;
+		}
+		Position position = new Position((String)doc.get("orderID"),(int) doc.get("itemID"),(int) doc.get("quantity"), (int)doc.get("totalPrice"), (int)doc.get("productID"));
 		return position;
 	}
 
 	@Override
 	public Bestellung getBestellungByID(String oID) {
-		DBCollection collection = (DBCollection) db.getCollection(collectionBestellung);
-		BasicDBObject query = new BasicDBObject("_id", oID);
-		DBObject object = collection.findOne(query);
-		Bestellung bestellung = new Bestellung((String)object.get("orderId"),(String) object.get("orderDate"),(double) object.get("totalPrice"), (int)object.get("usrID"));
+		MongoCollection<Document> collection = db.getCollection(collectionBestellung);
+		Document query = new Document("orderID", oID);
+		FindIterable<Document> result = collection.find(query);
+		Document doc = result.first();
+		if (doc == null) {
+			return null;
+		}
+		Bestellung bestellung = new Bestellung((String)doc.get("orderID"),(String) doc.get("orderDate"),(double) doc.get("totalPrice"), (int)doc.get("usrID"));
 		return bestellung;
 	}
 
@@ -136,9 +164,10 @@ public class MongoBestellungDAO implements BestellungDAO {
 	public boolean loeschePosition(int pID, String oID) {
 		if(oID == null || oID.equals("") || getPositionByID(pID,oID) == null)
 			return false;
-		DBCollection collection = (DBCollection) db.getCollection(collectionPosition);
-		BasicDBObject query = new BasicDBObject("_id", oID);
-		collection.remove(query);
+		MongoCollection<Document> collection = db.getCollection(collectionPosition);
+		Document query = new Document("orderID", oID)
+				.append("itemID", pID);
+		collection.deleteOne(query);
 		return true;
 	}
 
@@ -146,9 +175,21 @@ public class MongoBestellungDAO implements BestellungDAO {
 	public boolean loescheBestellung(String oID) {
 		if(oID == null || oID.equals("") || getBestellungByID(oID) == null)
 			return false;
-		DBCollection collection = (DBCollection) db.getCollection(collectionBestellung);
-		BasicDBObject query = new BasicDBObject("_id", oID);
-		collection.remove(query);
+		try{
+			List<Position> list = getPositionListbyBestellung(oID);
+			if(!list.isEmpty()){
+				for(int i=0; i<list.size(); i++){
+					int pos = list.get(i).getPositionsNr();
+					loeschePosition(pos,oID);
+				}
+			}
+			MongoCollection<Document> collection = db.getCollection(collectionBestellung);
+			Document query = new Document("orderID", oID);
+			collection.deleteOne(query);
+		}catch(Exception e){
+			System.out.println("MongoBenutzerDAO: LoeschePosition: "+e.getMessage());
+			return false;
+		}
 		return true;
 	}
 	

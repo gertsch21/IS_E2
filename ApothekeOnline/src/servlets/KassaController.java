@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class KassaController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		DecimalFormat df = new DecimalFormat("#.00");
 		HttpSession session = request.getSession();
 		
 		Produktmanagement prodman = Produktmanagement.getInstance();
@@ -50,24 +51,33 @@ public class KassaController extends HttpServlet {
     	
     	 // Iterate over all Key-Value-Pairs
     	 Iterator it = cart.entrySet().iterator();
-    	 
+    	 Double sum = 0.0;
     	 while (it.hasNext()) {
     	    	Map.Entry pair = (Map.Entry)it.next();
     	    	String keyValue = (String) pair.getKey();
     	    	Produkt product = prodman.getProduktByProduktID(keyValue);
+    	        double price = product.getprice() * Integer.parseInt(pair.getValue().toString());
+    	    	sum += price;
     	        checkCart.append(""
     	        		+ "<tr>"
-    	        		+ "<td>" + pair.getKey()
+    	        		+ "<td>" + pair.getKey() + "</td> "
     	        		+ "<td>" + product.getprodName() + "</td>"
     	        		+ "<td> "
     	        		+ 		"<input name=\"" + pair.getKey() + "\" type=\"text\" value=\"" + pair.getValue().toString() + "\">"
     	        		+ "</td>"
-    	        		+ "<td>" + product.getprice() + "</td>"
-    	        		+ "<td>" + product.getprice() * Integer.parseInt(pair.getValue().toString()) + "</td>"
+    	        		+ "<td>" + df.format(product.getprice()) + " &euro;</td>"
+    	        		+ "<td>" + df.format(price) + " &euro;</td>"
     	        		+ "</tr>");
-    	    
-    	        
+    	            	        
     	 }
+    	 checkCart.append(""
+	        		+ "<tr>"
+	        		+ "<td></td>" 
+	        		+ "<td></td>"
+	        		+ "<td></td>"
+	        		+ "<td><strong>Gesamt: </strong></td>"
+	        		+ "<td><strong>" + df.format(sum) + " &euro;</strong></td>"
+	        		+ "</tr>");
 	 
 	    System.out.println("doGet");
 	    request.setAttribute("page", "checkCart");

@@ -228,16 +228,39 @@ a.btn {
 div.product {
   background-color: #eeeeee;
   border-radius: 4px;
-  width: 300 px;
   height: 500 px;
   align: center;
-  padding: 10px;
+  padding: 7px;
+  margin: 5px;
    
 }  
+
+div.pricebox {
+	width: 100 %;
+	align: center;
+	display: table-cell; 
+	vertical-align: middle;
+
+}
 table.checkCart {
 	border-spacing: 6px;
 }
 table.checkCart th, td {
 	padding: 6px;
 	
+}
+
+p.price {
+	font-size: 25px;
+	font-weight: bold;
+	color: #22B573;
+	margin-bottom: 0px;
+	align: center;
+}
+
+h2 {
+  font-weight: bold;
+  color: #000;
+  font-size: 25px;
+  margin-top: 10px;
 }

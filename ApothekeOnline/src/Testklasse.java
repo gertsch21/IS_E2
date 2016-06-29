@@ -1,19 +1,21 @@
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
+
+import management.Produktmanagement;
+
+
 
 
 public class Testklasse {
 	public static void main(String[] args){
+
+		Random randomGenerator = new Random();
+		int id = 0;
 		
-		String keyName = "1.125";
+		Produktmanagement management = Produktmanagement.getInstance();
 		
-		double zahl = Double.parseDouble(keyName) +1;
-		
-		System.out.println(zahl);
-		
-		System.out.println(Integer.parseInt("04"));
-		
-		
+		for(int i=0;i<10;i++){
+			id = randomGenerator.nextInt(Integer.MAX_VALUE);
+			management.produktAnlegen("javaTestprodukt"+id, 10, "JavaTestproduktBeschreibung"+id, 356487644); //Kategorie: Testkategorie
+		}
 	}
 }

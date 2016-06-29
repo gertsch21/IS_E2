@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%
 	if(session.getAttribute("username")==null || session.getAttribute("username").equals("null")  ){
@@ -72,7 +72,7 @@
 			</div> 
 		</div><!-- End HEADER -->
 		
-<!-- Container für Hauptbereich: große Spalte für Produkte + kleine für Warenkorb -->		
+<!-- Container fÃ¼r Hauptbereich: groÃŸe Spalte fÃ¼r Produkte + kleine fÃ¼r Warenkorb -->		
 		<div class="container"> 
 			<div class="row">
 				 <div class="col-md-8"> <!-- Hauptspalte -->
@@ -80,31 +80,31 @@
 				 	
 				 </div> <!-- Ende Hauptspalte -->
 				 
-				 <!-------- Sidebar für Warenkorb -------->				 
+				 <!-------- Sidebar fÃ¼r Warenkorb -------->				 
 				 <div class="col-md-4"> 
 				 	<div class="sidebar-nav-fixed affix">
 							 
 		                   <div class="panel panel-cart">
-						      <div class="panel-heading">Prüfen Sie Ihre Bestellung:</div>
+						      <div class="panel-heading">PrÃ¼fen Sie Ihre Bestellung:</div>
 						      <div class="panel-body">
 						      	
 						      
 						      	
 						      	
-							      <p> Wenn Sie ein Produkt aus dem Warekorb entfernen möchten,
+							      <p> Wenn Sie ein Produkt aus dem Warekorb entfernen mÃ¶chten,
 							      setzen Sie die Menge 0!</p>
 						      </div>
 						    </div>
 	  
            			</div>
-				 </div> <!-- Ende Sidebar für Warenkorb -->
+				 </div> <!-- Ende Sidebar fÃ¼r Warenkorb -->
 			</div>
 		</div> <!-- Ende Container Hauptbereich -->
 		
 <!-------- Footer -------->		
 		<div class="row"> 
 			<div class="col-md-12">
-				(c) Apotheke Online
+				<br> &copy; Apotheke Online, 2016
 			</div>
 		</div> <!-- Ende Footer -->
 	</div>

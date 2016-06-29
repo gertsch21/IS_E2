@@ -1,13 +1,21 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 
+import model.Benutzer;
 import model.Category;
+import model.Kunde;
+import model.Mitarbeiter;
 import model.Produkt;
 
 /**
@@ -61,7 +69,7 @@ public class MongoProduktDAO implements ProduktDAO {
 			db.getCollection(collectionName)
 				.updateOne(new Document("_id", catId),
 					new Document("$push", 
-						new Document("product", 
+						new Document("products", 
 							new Document("product_id", prodId)
 							.append("name", name)
 							.append("price", price)
@@ -69,6 +77,7 @@ public class MongoProduktDAO implements ProduktDAO {
 						)
 					)
 				);
+			System.out.println("Produkt ("+prodId+") wurde gespeichert");
 			return true;
 			
 		} catch (Exception e) {
@@ -89,8 +98,8 @@ public class MongoProduktDAO implements ProduktDAO {
 			Document category = new Document() 
 				.append("_id", id)
 				.append("name", name)
-				.append("description", description)
-				.append("products", products);
+				.append("description", description);
+				
 			
 			db.getCollection(collectionName).insertOne(category);
 			System.out.println("Kategorie ("+name+") wurde gespeichert");
@@ -104,38 +113,153 @@ public class MongoProduktDAO implements ProduktDAO {
 
 	@Override
 	public List<Produkt> getProduktList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Produkt> prodList = new ArrayList<Produkt>();
+		
+		FindIterable<Document> documents = db.getCollection(collectionName).find();
+		
+		try{
+			for(Document d : documents) {
+				int catId = d.getInteger("_id").intValue();
+				
+				List<Document> products = (List<Document>)d.get("products");
+				if(products != null) {	
+					for(Document product : products) {
+						prodList.add( new Produkt(
+								product.getInteger("product_id").intValue(),
+								product.getString("name"),
+								product.getDouble("price"),
+								product.getString("description"),
+								catId
+								)
+						);
+					}
+				}
+			}
+			return prodList;
+			
+		}catch (Exception e) {
+			System.out.println("MongoProduktDAO: getProduktList - Error");
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public List<Category> getCategoryList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Category> catList = new ArrayList<Category>();
+		
+		FindIterable<Document> documents = db.getCollection(collectionName).find();
+		
+		try{
+			for(Document d : documents) {
+				catList.add( new Category(		
+						d.getInteger("_id").intValue(),
+						d.getString("name"),
+						d.getString("description")
+				));
+			}
+			return catList;
+			
+		}catch (Exception e) {
+			System.out.println("MongoProduktDAO: getCategoryList - Error");
+			e.printStackTrace();
+			return null;
+		}
 	}
+	
 
 	@Override
 	public Produkt getProduktByProduktID(String prodID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		FindIterable<Document> documents = db.getCollection(collectionName).find();
+		Produkt result = null;
+		try{
+			for(Document d : documents) {
+				int catId = d.getInteger("_id").intValue();
+				
+				List<Document> products = (List<Document>)d.get("products");
+				if(products != null) {
+					for(Document product : products) {
+						if (product.getInteger("product_id").intValue() == Integer.parseInt(prodID))
+						{result = new Produkt(
+								product.getInteger("product_id").intValue(),
+								product.getString("name"),
+								product.getDouble("price"),
+								product.getString("description"),
+								catId
+								);
+						return result;
+						}
+					}
+				}
+				
+			}
+			return result;
+			
+		}catch (Exception e) {
+			System.out.println("MongoProduktDAO: getProduktByProduktID: Error");
+			e.printStackTrace();
+			return null;
+		}
 	}
+		
 
 	@Override
 	public Category getCategoryByCategoryID(String categoryID) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			FindIterable<Document> documents = db.getCollection(collectionName)
+					.find(new Document("_id", Integer.parseInt(categoryID) ));
+			
+			Category c = null; 
+			
+			for(Document d : documents){
+					c = new Category(
+							d.getInteger("_id").intValue(),
+							d.getString("name"),
+							d.getString("description")
+							);
+			}
+
+			return c;
+		
+		} catch (Exception e) {
+			System.out.println("MongoProduktDAO: getCategoryByCategoryID: Error");
+			return null;
+		}
 	}
 
 	@Override
 	public boolean loescheProduktByProdID(String prodID) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		try {
+			Produkt prod = this.getProduktByProduktID(prodID);
+			int cat_id = prod.getcategoryID();
+			
+			DBCollection collection = (DBCollection) db.getCollection(collectionName); // Hier hat's was das funkt nicht!
+			System.out.println("ich bin da!");
+			BasicDBObject query = new BasicDBObject("_id", cat_id);
+
+			BasicDBObject update = new BasicDBObject("products", new BasicDBObject("product_id", prod.getprodID()));
+			collection.update(query, new BasicDBObject("$pull",update));
+			
+			return true;
+			
+		} catch (Exception e) {
+			System.out.println("MongoProduktDAO: loescheProduktByProdID: Error");
+			return false;
+		}
+		
+		
 	}
 
 	@Override
 	public boolean loescheCategoryByCategoryID(String categoryID) {
-		// TODO Auto-generated method stub
-		return false;
+		DeleteResult dr = db.getCollection(collectionName).deleteOne(
+				(new Document("_id", Integer.parseInt(categoryID))));
+		if (dr.getDeletedCount() > 0)
+			return true;
+		else
+			return false;
 	}
 
 }

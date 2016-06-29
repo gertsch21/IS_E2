@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,7 +27,7 @@ import model.Produkt;
 @WebServlet("/ShopController")
 public class ShopController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	DecimalFormat df = new DecimalFormat("#.00");
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -52,16 +53,27 @@ public class ShopController extends HttpServlet {
 		
 		for(Produkt product : allProducts) {
 			prodOut.append("<div class=\"product\">"
-								+ "<h2>" + product.getprodName() + "</h2>" 
-								+ "<p class=\"description\">" + product.getprodDescription() + "</p>"
-								+ "<p class=\"price\">" + product.getprice() + " € </p>"
+								+ "<div class=\"row\">"
+								+ "<div class=\"col-md-8\">"
+								+ "		<h2>" + product.getprodName() + "</h2>" 
+								+ "		<p class=\"description\">" + product.getprodDescription() + "</p>"
+								+ "</div>"
+								+ "<div class=\"col-md-4\" style=\"display: table; overflow: hidden;\">"
+								+ "		<div class=\"pricebox\">"
+								+ "			<div class=\"centered\">"
+								+ "			<p class=\"price\"> &nbsp; &nbsp; &nbsp;" + df.format(product.getprice()) + " &euro; </p>"
+								
 			);
 			
-			prodOut.append("<form action=\"ShopController\" method=\"POST\">"
-							+ "<input class=\"btnAdd2Cart\" name=\"zumWarenkorb\" type=\"submit\" value=\"zum Warenkorb\"/>"
-							+ "<input type=\"hidden\" name=\"product_id\" value=" + product.getprodID() + ">"
-							+ "</form>"
-							+ "</div>"
+				prodOut.append("			<form action=\"ShopController\" method=\"POST\">"
+								+ "			<input class=\"btnAdd2Cart\" name=\"zumWarenkorb\" type=\"submit\" value=\"zum Warenkorb\"/>"
+								+ "			<input type=\"hidden\" name=\"product_id\" value=" + product.getprodID() + ">"
+								+ "			</form>"
+								+ "			</div>"
+								+ "		</div>"
+								+ "</div>"
+								+ "</div>"
+								+ "</div>"
 			);
 		}
 		
@@ -108,10 +120,6 @@ public class ShopController extends HttpServlet {
 		Produktmanagement prodman = Produktmanagement.getInstance();
 		StringBuffer cartOut = new StringBuffer();
 		
-		if ( cart.containsKey(productID) ) {
-			int quantity = cart.get(productID) + 1;
-			cartOut.append(quantity);
-		}
 	        	cartOut.append(
 	        			"<table class=\"cart\">"
     	        		);
@@ -133,7 +141,11 @@ public class ShopController extends HttpServlet {
 	        	 }
         	 
         	    cartOut.append(
-    	        		 "</table>");
+    	        		 "</table>"
+    	        		 + " <form action=\"KassaController\" method=\"GET\"> "
+						 + "	<input class=\"btnGreen\" type=\"submit\" " 
+						 + "		value=\"zur Kasse\"/>"
+						 + "  </form>");
 		
 		session.setAttribute("cartOut", cartOut);
 		

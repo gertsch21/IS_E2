@@ -1,6 +1,6 @@
 <%@page import="management.Benutzerverwaltung"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 
 <%
@@ -43,7 +43,7 @@
 			<div class="col-md-12"> 
 				<div class="jumbotron">
 
-					<h1>Apotheke Online</h1>
+					<img src="Bilder/aon_logo.png" alt="" height="123" width="600"/>
 					<h3>Herzlich Willkommen <%=session.getAttribute("username")%>!</h3> <!-- wenn null, dann darf man sowieso nicht auf die Hauptseite zugreifen -->
 
 <%
@@ -76,7 +76,7 @@
 			</div> 
 		</div><!-- End HEADER -->
 		
-<!-- Container für Hauptbereich: große Spalte für Produkte + kleine für Warenkorb -->		
+<!-- Container fÃ¼r Hauptbereich: groÃŸe Spalte fÃ¼r Produkte + kleine fÃ¼r Warenkorb -->		
 		<div class="container"> 
 			<div class="row">
 				 <div class="col-md-8"> <!-- Hauptspalte -->
@@ -84,7 +84,7 @@
 				 	
 				 </div> <!-- Ende Hauptspalte -->
 				 
-				 <!-------- Sidebar für Warenkorb -------->				 
+				 <!-------- Sidebar fÃ¼r Warenkorb -------->				 
 				 <div class="col-md-4"> 
 				 	<div class="sidebar-nav-fixed affix">
 							 
@@ -94,16 +94,12 @@
 						      	
 						      	<jsp:include page="Warenkorb.jsp" />
 						      	
-							      <form action="KassaController" method="GET">
-										<input class="btnGreen" type="submit" 
-											value="zur Kasse" />
-										
-								  </form>
+							      
 						      </div>
 						    </div>
 	  
            			</div>
-				 </div> <!-- Ende Sidebar für Warenkorb -->
+				 </div> <!-- Ende Sidebar fÃ¼r Warenkorb -->
 			</div>
 		</div> <!-- Ende Container Hauptbereich -->
 
@@ -118,11 +114,11 @@
 				<input type="hidden" name="prover" value="true"/>
 			</form>
     		<form action="KategorieHinzufuegenController" method="POST">
-				<input class="btn btn-primary" name="kategorieReg" type="submit" value="Kategorie hinzufügen"/>
+				<input class="btn btn-primary" name="kategorieReg" type="submit" value="Kategorie hinzufÃ¼gen"/>
 				<input type="hidden" name="kategorieReg" value="true"/>
 			</form>
 			<form action="ProduktHinzufuegenController" method="POST">
-				<input class="btn btn-primary" name="produktReg" type="submit" value="Produkt hinzufügen"/>
+				<input class="btn btn-primary" name="produktReg" type="submit" value="Produkt hinzufÃ¼gen"/>
 				<input type="hidden" name="produktReg" value="true"/>
 			</form>
 			<form action="MitarbeiterRegistrierController" method="POST">
@@ -141,7 +137,7 @@
 <!-------- Footer -------->		
 		<div class="row"> 
 			<div class="col-md-12">
-				(c) Apotheke Online
+				<br/>&copy; Apotheke Online 2016
 			</div>
 		</div> <!-- Ende Footer -->
 	</div>

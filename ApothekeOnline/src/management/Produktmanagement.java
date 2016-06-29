@@ -5,6 +5,7 @@ import java.util.Random;
 
 import model.Produkt;
 import model.Category;
+import dao.MongoProduktDAO;
 import dao.ProduktDAO;
 import dao.DBProduktDAO1;
 
@@ -13,7 +14,8 @@ public class Produktmanagement {
 	private ProduktDAO dao;
 	
 	private Produktmanagement() {
-		dao = new DBProduktDAO1();
+		//dao = new DBProduktDAO1();
+		dao = new MongoProduktDAO();
 	}
     
     public static Produktmanagement getInstance(){
